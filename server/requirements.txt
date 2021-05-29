@@ -1,0 +1,7 @@
+cffi==1.14.5
+numpy==1.20.3
+PyAudio==0.2.11
+pycparser==2.20
+scipy==1.6.3
+sounddevice==0.4.1
+SpeechRecognition==3.8.1
