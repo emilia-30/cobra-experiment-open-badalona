@@ -2,11 +2,11 @@ import json
 import socket
 import threading
 
+from const import *
 from gui import gui
+from instrctions import *
 from trial import do_trial
 from utils import prepare_out
-from instrctions import *
-from const import *
 
 
 class Client():
@@ -39,8 +39,14 @@ class Client():
                 if message:
                     if message == INSTRUCTIONS_PHASE['INTRODUCTION']:
                         gui.show_instructions_screen(self.on_spacebar_callback, INTRO_DETAILS, INTRO_HEADER)
+
+                    elif message == INSTRUCTIONS_PHASE['PRACTICE_COMPLETE']:
+                        gui.show_instructions_screen(self.on_spacebar_callback, PRACTICE_COMPLETE_DETAILS,
+                                                     PRACTICE_COMPLETE_HEADER)
+
                     elif message == INSTRUCTIONS_PHASE['BREAK']:
                         gui.show_instructions_screen(self.on_spacebar_callback, BREAK_DETAILS, BREAK_HEADER)
+
                     else:
                         gui.show_text(response.get("message"))
 

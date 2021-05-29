@@ -50,6 +50,7 @@ def get_save_to_db(cursor):
 def get_all(cursor):
     cursor.execute("SELECT * from trial")
     rows = cursor.fetchall()
+    # print all to csv
     for row in rows:
         print(row)
 

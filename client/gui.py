@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from PIL import ImageTk, Image
+
 from const import DISPLAY_IMAGE_SIZE
 
 path_to_images_dir = "static/images/"
@@ -103,7 +104,6 @@ class Gui(tk.Tk):
         self.loaded_images = {}
 
         for i in images:
-            print(i)
             pilImage = Image.open('static/images/' + i)
 
             imgWidth, imgHeight = pilImage.size
@@ -116,8 +116,6 @@ class Gui(tk.Tk):
                 pilImage = pilImage.resize((imgWidth, imgHeight), Image.ANTIALIAS)
 
             self.loaded_images[i] = ImageTk.PhotoImage(pilImage)
-
-        print(self.loaded_images)
 
 
 gui = Gui()

@@ -6,6 +6,5 @@ import soundfile as sf
 
 def play_audio(filepath):
     data, fs = sf.read(filepath, dtype='float32')
-    print(data)
     sd.play(data, fs)
     sd.wait()  # Wait until file is done playing

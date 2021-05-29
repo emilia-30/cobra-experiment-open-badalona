@@ -9,6 +9,18 @@ INTRO_DETAILS = "Les règles:\n\n" \
                 "Il y aura également des pauses où vous pourrez vous reposer.\n\n" \
                 "S'il vous plaît, appuyez sur la barre d'espace lorsque vous êtes prêt à commencer.\n"
 
+# ---------
+
+
+PRACTICE_COMPLETE_HEADER = "Practice complete"
+
+PRACTICE_COMPLETE_DETAILS = "Please have a break\n\n" \
+                            "Le joueur 1 voit une image et doit la nommer. Le joueur 2 doit répondre par un mot qui lui vient en premier à l'esprit mais qui est dans la même catégorie que celui produit par le joueur 1 auparavant.\n\n" \
+                            "S'il vous plaît, appuyez sur la barre d'espace lorsque vous êtes prêt à commencer.\n"
+
+# ---------
+
+
 BREAK_HEADER = "Break time"
 
 BREAK_DETAILS = "Please have a break\n\n" \

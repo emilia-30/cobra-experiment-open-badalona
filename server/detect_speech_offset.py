@@ -19,7 +19,6 @@ r.non_speaking_duration = 0.1
 def detect_speech_offset(speech_offset_callback=lambda: print('speech event complete'), expected_speech_events=2):
     speech_events = 0
 
-
     # r.listen_in_background(m, cb)
 
     with m as source:

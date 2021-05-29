@@ -1,17 +1,14 @@
 import json
-import os
-import random
 import socket
 import threading
 import time
-from datetime import date
 
-from detect_speech_offset import detect_speech_offset
-from utils import create_dir, prepare_stims
-from duck import *
 from db import create_connection, get_all, get_save_to_db
+from duck import *
 from record import record
-from stims import STIMS
+from stims import STIM_KEYS, PRACTICE_STIMS
+# from detect_speech_offset import detect_speech_offset
+from utils import create_dir, prepare_stims
 
 ServerSocket = socket.socket()
 clientsCount = 0
@@ -37,36 +34,16 @@ def send_message_to_both(message: str):
     partTwo.send(data)
 
 
-# def countdown_to_start():
-#     print(range(COUNTDOWN_START, COUNTDOWN_END, -1))
-#     for s in range(COUNTDOWN_START, COUNTDOWN_END, -1):
-#         print(s)
-#         send_message_to_both("starting in ... " + str(s) + "\n")
-#         time.sleep(1)
-
-
 def end_experiment():
     print('ending')
     time.sleep(1)
     send_message_to_both("complete")
 
 
-# def combine_responses(speaker, listener):
-#     if speaker["stim"]["key"] == listener["stim"]["key"]:
-#         return {
-#             "prime": speaker["stim"]["prime"],
-#             "prime_type": speaker["stim"]["prime_type"],
-#             "stim_key": speaker["stim"]["key"],
-#             "speaker_response": speaker["response"],
-#             "speaker_response_time": speaker["response_time"],
-#             "listener_response": listener["response"],
-#             "listener_response_time": listener["response_time"],
-#         }
-#     # else throw error
-
-
 def run_experiment():
-    prepared_stims = prepare_stims(STIMS, PRIME_TYPES)
+    print('START server experiment set up')
+
+    prepared_stims = prepare_stims(STIM_KEYS, PRIME_TYPES)
     db = create_connection(db_path)
     db_cursor = db.get("cursor")
     save_to_db = get_save_to_db(db_cursor)
@@ -74,6 +51,31 @@ def run_experiment():
     results_audio_folder = "audio/" + str(time.time())
 
     create_dir(results_audio_folder)
+
+    print('END server experiment set up')
+
+    print('START practice')
+
+    for index, practice_stim in enumerate(PRACTICE_STIMS):
+        speaker, listener = (
+            (partTwo, partOne) if index % 2 == 0 else (partOne, partTwo)
+        )
+
+        speaker.send(
+            prepareOut(
+                {
+                    "trial": {"phase": TRIAL_PHASES["SPEAKER"], "stim": practice_stim},
+                }
+            )
+        )
+        # blocks till speaker prime and image shown
+        json.loads(speaker.recv(2048).decode("utf-8"))
+
+        time.sleep(DURATIONS['MAX_TRIAL_TIME_AFTER_STIM'])
+
+    print('END practice')
+
+    instructions_and_confirm(INSTRUCTIONS_PHASE['PRACTICE_COMPLETE'])
 
     def do_trial(trialIndex):
 
@@ -127,7 +129,8 @@ def run_experiment():
             end_experiment()
             exit()
 
-    # first trial
+    print('START trials')
+
     do_trial(1)
 
 

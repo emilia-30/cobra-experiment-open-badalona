@@ -1,4 +1,5 @@
-host = "192.168.0.1"
+host = "127.0.0.1"
+# host = "192.168.0.1"
 port = 1233
 
 db_path = "results_db"
@@ -11,7 +12,6 @@ PRIME_TYPES = {
     "beep": "beep",
 }
 
-
 TRIAL_PHASES = {
     "SPEAKER": "SPEAKER",
     "LISTENER": "LISTENER",
@@ -19,13 +19,12 @@ TRIAL_PHASES = {
 
 INSTRUCTIONS_PHASE = {
     "INTRODUCTION": "INTRODUCTION",
+    "PRACTICE_COMPLETE": "PRACTICE_COMPLETE",
     "BREAK": "BREAK"
 }
 
 DURATIONS = {
     # pauses
-    "PAUSE_BEFORE_PRIME": 0,
-    "PAUSE_BEFORE_IMAGE": 0,
 
     # displays
     "DISPLAY_IMAGE_TIME": 3,
