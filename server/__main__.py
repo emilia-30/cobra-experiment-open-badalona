@@ -2,10 +2,12 @@ import json
 import socket
 import threading
 import time
+from datetime import datetime
 
 from db import create_connection, get_all, get_save_to_db
 from duck import *
-from record import record
+from results_audio import Results_audio
+from results_csv import Results_csv
 from stims import STIM_KEYS, PRACTICE_STIMS
 # from detect_speech_offset import detect_speech_offset
 from utils import create_dir, prepare_stims
@@ -44,18 +46,22 @@ def run_experiment():
     print('START server experiment set up')
 
     prepared_stims = prepare_stims(STIM_KEYS, PRIME_TYPES)
+
     db = create_connection(db_path)
     db_cursor = db.get("cursor")
     save_to_db = get_save_to_db(db_cursor)
 
-    results_audio_folder = "audio/" + str(time.time())
+    save_results_name = datetime.now().strftime("%b %d %Y %H:%M:%S")
+
+    results_audio_folder = "results/audio/" + save_results_name
 
     create_dir(results_audio_folder)
+
+    csv = Results_csv(save_results_name)
 
     print('END server experiment set up')
 
     print('START practice')
-
     for index, practice_stim in enumerate(PRACTICE_STIMS):
         speaker, listener = (
             (partTwo, partOne) if index % 2 == 0 else (partOne, partTwo)
@@ -77,12 +83,12 @@ def run_experiment():
 
     instructions_and_confirm(INSTRUCTIONS_PHASE['PRACTICE_COMPLETE'])
 
-    def do_trial(trialIndex):
+    def do_trial(trial_index):
 
-        stim = prepared_stims[trialIndex - 1]
+        stim = prepared_stims[trial_index - 1]
 
         speaker, listener = (
-            (partTwo, partOne) if trialIndex % 2 == 0 else (partOne, partTwo)
+            (partTwo, partOne) if trial_index % 2 == 0 else (partOne, partTwo)
         )
 
         speaker.send(
@@ -94,7 +100,7 @@ def run_experiment():
         )
 
         # record object should be initiated some seconds before we actually start recording as there is som e noise for first ~1 second
-        audio_recording = record(results_audio_folder)
+        audio_recording = Results_audio(results_audio_folder)
 
         recording_thread = threading.Thread(target=audio_recording.start, args=[stim])
 
@@ -116,12 +122,13 @@ def run_experiment():
         }
 
         save_to_db(trial_results)
+        csv.add_entry(trial_results, trial_index)
 
-        if trialIndex < len(prepared_stims):
-            if EXPERIMENT_BREAK_POINTS.__contains__(trialIndex):
+        if trial_index < len(prepared_stims):
+            if EXPERIMENT_BREAK_POINTS.__contains__(trial_index):
                 instructions_and_confirm(INSTRUCTIONS_PHASE['BREAK'])
 
-            do_trial(trialIndex + 1)
+            do_trial(trial_index + 1)
         else:
             end = db.get("finish")
             get_all(db_cursor)

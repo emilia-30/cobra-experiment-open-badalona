@@ -8,7 +8,7 @@ channels = 1
 fs = 44100  # Record at 44100 samples per second
 
 
-class record():
+class Results_audio():
     def __init__(self, results_folder):
         self.results_folder = results_folder
         self.recording = False
@@ -29,7 +29,6 @@ class record():
         self.frames = []  # Initialize array to store frames
 
         while self.recording:
-            # for i in range(0, int(fs / chunk * seconds)): # for time limit
             data = self.stream.read(chunk)
             self.frames.append(data)
 
