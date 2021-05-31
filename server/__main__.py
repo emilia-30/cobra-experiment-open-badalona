@@ -51,7 +51,7 @@ def run_experiment():
     db_cursor = db.get("cursor")
     save_to_db = get_save_to_db(db_cursor)
 
-    save_results_name = datetime.now().strftime("%b %d %Y %H:%M:%S")
+    save_results_name = datetime.now().strftime("%b %d %Y %H.%M.%S")
 
     results_audio_folder = "results/audio/" + save_results_name
 
@@ -102,7 +102,7 @@ def run_experiment():
         # record object should be initiated some seconds before we actually start recording as there is som e noise for first ~1 second
         audio_recording = Results_audio(results_audio_folder)
 
-        recording_thread = threading.Thread(target=audio_recording.start, args=[stim])
+        recording_thread = threading.Thread(target=audio_recording.start, args=[stim, trial_index])
 
         # blocks till speaker prime and image shown
         json.loads(speaker.recv(2048).decode("utf-8"))
