@@ -1,5 +1,4 @@
 import wave
-
 import pyaudio
 
 chunk = 1024  # Record in chunks of 1024 samples

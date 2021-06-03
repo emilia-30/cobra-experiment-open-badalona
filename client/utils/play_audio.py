@@ -1,8 +1,9 @@
 import sounddevice as sd
 import soundfile as sf
 
-
-# requires python-sounddevice, numpy, and soundfile to be installed
+# depending on machine/setup
+sd.default.device = 3
+sd.default.channels = 2
 
 def play_audio(filepath):
     data, fs = sf.read(filepath, dtype='float32')
