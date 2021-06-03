@@ -3,7 +3,7 @@ import csv
 
 class Results_csv:
     def __init__(self, file_name):
-        self.file = open('results/' + file_name + '.csv', mode='w')
+        self.file = open('results\\' + file_name + '.csv', mode='w')
         self.writer = csv.writer(self.file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         header_row = ['trial_index', 'prime_type', 'stim']
         self.writer.writerow(header_row)

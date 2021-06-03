@@ -14,7 +14,7 @@ class Results_audio():
         self.recording = False
         self.p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
-    def start(self, stim):
+    def start(self, stim, trial_index):
         self.recording = True
 
         self.ended_before_max_time = False
@@ -42,7 +42,7 @@ class Results_audio():
         print('Finished recording')
 
         # Save the recorded data as a WAV file
-        filename = self.results_folder + '/' + stim["prime"] + '_' + stim["stim"] + '.wav'
+        filename = self.results_folder + '/' + stim["prime"] + '_' + stim["stim"] + '_' + str(trial_index) + '.wav'
         wf = wave.open(filename, 'wb')
         wf.setnchannels(channels)
         wf.setsampwidth(self.p.get_sample_size(sample_format))
