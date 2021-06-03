@@ -84,7 +84,7 @@ class Gui(tk.Tk):
                                             justify='center',
                                             )
 
-        self.instructions_header.grid(row=2, column=0, pady=(100, 100))
+        self.instructions_header.grid(row=2, column=0, pady=(70, 10))
 
         ## label widget used to display messages
         self.instructions_details = tk.Label(self, text=details, font=("Arial", 22), background='black',
@@ -92,7 +92,7 @@ class Gui(tk.Tk):
                                              wraplength=(self.winfo_width() - 200), justify='left',
                                              )
 
-        self.instructions_details.grid(row=4, column=0, padx=(100, 100), pady=(100, 100))
+        self.instructions_details.grid(row=4, column=0, padx=(100, 100), pady=(50, 100))
 
         self.bind_key_listener(callback)
 
