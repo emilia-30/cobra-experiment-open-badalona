@@ -5,14 +5,29 @@
 
 PRACTICE_STIMS = [
     {
-        "stim": 'agrafeuse',
+        "stim": 'brouette',
+        "prime": 'beep'
+    },
+    {
+        "stim": 'dauphin',
+        "prime": 'unpredictable'
+    },
+    {
+        "stim": 'brouette',
         "prime": 'predictable'
     },
     {
-        "stim": 'balai',
+        "stim": 'brouette',
         "prime": 'unpredictable'
+    },
+    {
+        "stim": 'dauphin',
+        "prime": 'predictable'
+    },
+    {
+        "stim": 'dauphin',
+        "prime": 'beep'
     }
-    #   ...
 ]
 
 STIM_KEYS = [
