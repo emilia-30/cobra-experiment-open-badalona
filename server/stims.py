@@ -10,23 +10,23 @@ PRACTICE_STIMS = [
     },
     {
         "stim": 'dauphin',
-        "prime": 'unpredictable'
-    },
-    {
-        "stim": 'brouette',
-        "prime": 'predictable'
-    },
-    {
-        "stim": 'brouette',
-        "prime": 'unpredictable'
-    },
-    {
-        "stim": 'dauphin',
-        "prime": 'predictable'
-    },
-    {
-        "stim": 'dauphin',
         "prime": 'beep'
+    },
+    {
+        "stim": 'meduse',
+        "prime": 'predictable'
+    },
+    {
+        "stim": 'clou',
+        "prime": 'unpredictable'
+    },
+    {
+        "stim": 'oiseau',
+        "prime": 'unpredictable'
+    },
+    {
+        "stim": 'tournevis',
+        "prime": 'predictable'
     }
 ]
 
