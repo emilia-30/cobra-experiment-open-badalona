@@ -1,7 +1,7 @@
 import os
 import random
 
-from const import USE_ALL_STIMS_PER_SESSION_COUNT
+from config import REPEAT_STIMS_PER_SESSION_TIMES
 
 
 def create_dir(dir_path):
@@ -13,20 +13,12 @@ def create_dir(dir_path):
         print("Successfully created the directory %s " % dir_path)
 
 
-def prepare_stims(stims, prime_types):
+def prepare_stims(stims):
     result = []
 
-    for i in range(USE_ALL_STIMS_PER_SESSION_COUNT):
-        stims_with_primes = []
-        for s in stims:
-            for t in prime_types:
-                stims_with_primes.append({
-                    "stim": s,
-                    "prime": t
-                })
+    for i in range(REPEAT_STIMS_PER_SESSION_TIMES):
+        random.shuffle(stims)
 
-        random.shuffle(stims_with_primes)
-
-        result = result + stims_with_primes
+        result = result + stims
 
     return result

@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import ttk
 
 from PIL import ImageTk, Image
-
 from const import DISPLAY_IMAGE_SIZE
 
 path_to_images_dir = "static/images/"
@@ -17,9 +16,9 @@ class Gui(tk.Tk):
 
         self.title('')
         ## fullscreeen
-        self.overrideredirect(True)
-        self.overrideredirect(False)
-        self.attributes('-fullscreen', True, )
+        # self.overrideredirect(True)
+        # self.overrideredirect(False)
+        # self.attributes('-fullscreen', True, )
         self.configure(bg='black')
 
         # dimensions used to set image size
@@ -119,3 +118,20 @@ class Gui(tk.Tk):
 
 
 gui = Gui()
+
+# def connect():
+#     # gui.connect_button.destroy()
+#     gui.show_text('+')
+#     time.sleep(10)
+#     gui.remove_text()
+#     time.sleep(10)
+#     gui.show_text('+')
+#     time.sleep(10)
+#     gui.remove_text()
+#
+#
+#
+# gui.connect_button.configure(command=connect)
+# gui.connect_button.destroy()
+# t0 = threading.Thread(target=gui.run)
+# t0.run()

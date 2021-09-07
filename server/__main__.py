@@ -4,12 +4,11 @@ import threading
 import time
 from datetime import datetime
 
-from db import create_connection, get_all, get_save_to_db
+from config import *
 from duck import *
 from results_audio import Results_audio
 from results_csv import Results_csv
-from stims import STIM_KEYS, PRACTICE_STIMS
-# from detect_speech_offset import detect_speech_offset
+from stims import STIM_KEYS
 from utils import create_dir, prepare_stims
 
 ServerSocket = socket.socket()
@@ -45,11 +44,7 @@ def end_experiment():
 def run_experiment():
     print('START server experiment set up')
 
-    prepared_stims = prepare_stims(STIM_KEYS, PRIME_TYPES)
-
-    db = create_connection(db_path)
-    db_cursor = db.get("cursor")
-    save_to_db = get_save_to_db(db_cursor)
+    prepared_stims = prepare_stims(STIM_KEYS)
 
     save_results_name = datetime.now().strftime("%b %d %Y %H.%M.%S")
 
@@ -74,7 +69,14 @@ def run_experiment():
                 }
             )
         )
-        # blocks till speaker prime and image shown
+        listener.send(
+            prepareOut(
+                {
+                    "trial": {"phase": TRIAL_PHASES["LISTENER"], "stim": practice_stim},
+                }
+            )
+        )
+        # blocks till speaker image shown
         json.loads(speaker.recv(2048).decode("utf-8"))
 
         time.sleep(DURATIONS['MAX_TRIAL_TIME_AFTER_STIM'])
@@ -99,29 +101,32 @@ def run_experiment():
             )
         )
 
+        listener.send(
+            prepareOut(
+                {
+                    "trial": {"phase": TRIAL_PHASES["LISTENER"], "stim": stim},
+                }
+            )
+        )
         # record object should be initiated some seconds before we actually start recording as there is som e noise for first ~1 second
         audio_recording = Results_audio(results_audio_folder)
 
         recording_thread = threading.Thread(target=audio_recording.start, args=[stim, trial_index])
 
-        # blocks till speaker prime and image shown
+        # blocks till speaker and listener image first shown
         json.loads(speaker.recv(2048).decode("utf-8"))
 
         recording_thread.start()
-
-        # todo get response times running detect in thread
-        # detect_speech_offset()
 
         time.sleep(DURATIONS['MAX_TRIAL_TIME_AFTER_STIM'])
 
         audio_recording.stop()
 
         trial_results = {
-            "prime": stim["prime"],
-            "stim": stim["stim"],
+            "stim": stim,
+            "speaker": '2' if trial_index % 2 == 0 else '1'
         }
 
-        save_to_db(trial_results)
         csv.add_entry(trial_results, trial_index)
 
         if trial_index < len(prepared_stims):
@@ -130,9 +135,6 @@ def run_experiment():
 
             do_trial(trial_index + 1)
         else:
-            end = db.get("finish")
-            get_all(db_cursor)
-            end()
             end_experiment()
             exit()
 

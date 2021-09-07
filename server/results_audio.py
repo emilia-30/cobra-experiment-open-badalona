@@ -1,4 +1,5 @@
 import wave
+
 import pyaudio
 
 chunk = 1024  # Record in chunks of 1024 samples
@@ -41,7 +42,7 @@ class Results_audio():
         print('Finished recording')
 
         # Save the recorded data as a WAV file
-        filename = self.results_folder + '/' + stim["prime"] + '_' + stim["stim"] + '_' + str(trial_index) + '.wav'
+        filename = self.results_folder + '/' + stim + '_' + str(trial_index) + '.wav'
         wf = wave.open(filename, 'wb')
         wf.setnchannels(channels)
         wf.setsampwidth(self.p.get_sample_size(sample_format))

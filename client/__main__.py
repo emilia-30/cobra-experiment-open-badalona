@@ -4,7 +4,7 @@ import threading
 
 from const import *
 from gui import gui
-from instrctions import *
+from instructions import *
 from trial import do_trial
 from utils import prepare_out
 
