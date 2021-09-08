@@ -7,9 +7,6 @@ from gui import gui
 from utils import prepare_out
 
 
-# path_to_audio_dir = "static/audio/"
-
-
 def do_trial(trial, send):
     now = datetime.now()
 

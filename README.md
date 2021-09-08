@@ -5,7 +5,7 @@
  
 ### Installation
  
- 1. Clone the repo
+ 1. Clone the repository from github
     ```sh
     git clone https://github.com/emilia-30/cobra-experiment-open-badalona.git    
     ```
@@ -13,24 +13,24 @@
     ```sh
     cd cobra-experiment-open-badalona
     ```
- 3. Install dependencies
+ 3. Install dependencies in both `/client` and `/server`
     ```sh
-    pip3 install -r requirements.txt
+    pip install -r requirements.txt
     ```
 
 ---
 
 ### Running the experiment
 
-1. to start the server:
+1. to start the server, in `/server`:
     ```sh 
-    python3 server
+    python __main__.py
    ```
 
 
-2. then start the 2 clients (eg in two new terminal windows):
+2. then start the 2 clients (eg in two new terminal windows), in `/client`:
     ```sh 
-    python3 client
+    python __main__.py
     ```
 
 ---
