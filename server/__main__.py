@@ -8,7 +8,7 @@ from config import *
 from duck import *
 from results_audio import Results_audio
 from results_csv import Results_csv
-from stims import STIM_KEYS
+from stims import STIM_KEYS, PRACTICE_STIMS
 from utils import create_dir, prepare_stims
 
 ServerSocket = socket.socket()
