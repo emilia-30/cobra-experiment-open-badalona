@@ -2,6 +2,7 @@ import json
 import socket
 import threading
 
+from config import *
 from const import *
 from gui import gui
 from instructions import *

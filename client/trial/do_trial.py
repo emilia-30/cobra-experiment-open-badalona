@@ -1,7 +1,8 @@
 import time
 from datetime import datetime
 
-from const import *
+from config import DURATIONS
+from const import TRIAL_PHASES
 from gui import gui
 from utils import prepare_out
 
